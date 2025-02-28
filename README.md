@@ -6,3 +6,6 @@ After considering all the ideas we received, we decided to combine them into one
 This project gave us the opportunity to apply everything we've learned this semester in C, all in one place.
 
 A big thanks to my teammates Anup Joshi, Crystal Khanal, and Ishant Yadav for their dedication and teamwork. We’re proud to have completed this project and gained so much from the experience! 🙌
+
+
+![Screenshot 2025-02-28 224334](https://github.com/user-attachments/assets/08e10035-a2d3-4ef4-8e2e-bb640555aa80)
