@@ -84,6 +84,7 @@ void mainMenu(int *points) {
     int choice;
 
     while (1) {
+        line();
         printf("\n\n\n");
         printf("\t\t\t\t Choose any of the options:\n");
         printf("\t\t\t\t Press (1) for Tic-Tac-Toe (Free)\n");
@@ -149,6 +150,7 @@ void mainMenu(int *points) {
 int main() {
 
     hero();
+    line();
 
 
     
@@ -161,6 +163,7 @@ int main() {
             // Show main menu and handle menu options
             color(7);
             showMainMenu();
+            line();
         } else {
             printf("Invalid credentials!\n");
             char retry;
