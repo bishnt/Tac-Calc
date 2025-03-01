@@ -1,14 +1,25 @@
+#ifndef DASHBOARD_H
+#define DASHBOARD_H
+
 #include <stdlib.h>
 #include <string.h>
-#include<stdio.h>
+#include <stdio.h>
 
 typedef struct {
     char username[50];
     char password[50];
-     int score;
+    int score;
 } user;
 
 // Function to fetch user details from file
+void get_user_details(const char *username, user *u);
+
+// Function to display the dashboard
+void dashboard(const char *username);
+
+// Function implementations - move these to a dashboard.c file if possible
+#ifdef DASHBOARD_IMPLEMENTATION
+
 void get_user_details(const char *username, user *u) {
     FILE *fp = fopen("database.txt", "r");
     if (fp == NULL) {
@@ -26,9 +37,9 @@ void get_user_details(const char *username, user *u) {
     fclose(fp);
 }
 
-// Function to display the dashboard
 void dashboard(const char *username) {
- // For Linux/macOS; use "cls" for Windows
+    // For Linux/macOS; use "cls" for Windows
+    system("cls"); // Using cls for Windows, change to "clear" for Linux/macOS
 
     user u;
     get_user_details(username, &u);
@@ -40,4 +51,7 @@ void dashboard(const char *username) {
     printf("\t\t\t\t-------------------------------\n");
 }
 
+#endif /* DASHBOARD_IMPLEMENTATION */
+
+#endif /* DASHBOARD_H */
 
