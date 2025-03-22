@@ -13,12 +13,15 @@ typedef struct {
 } user;
 
 // Function declarations
-int old_user();
-int new_user();
-int login();
+// In login.h
+
+// Updated function prototypes
+int old_user(char* current_username);
+int new_user(char* current_username);
+int login(char* current_username);
 
 // Function implementations
-int old_user() {
+int old_user(char* current_username) {
     char username[50];
     char password[50];
     char fileUsername[50];
@@ -36,13 +39,14 @@ int old_user() {
     FILE *file = fopen("database.txt", "r");
     if (file == NULL) {
         printf("\n\t\t\t\tError: Could not open database file!\n");
-        return 0; // Return failure if file can't be opened
+        return 0;
     }
     
     // Read the file line by line to check credentials
     while (fscanf(file, "%s %s %d", fileUsername, filePassword, &fileScore) == 3) {
         if (strcmp(username, fileUsername) == 0 && strcmp(password, filePassword) == 0) {
             found = 1;
+            strcpy(current_username, username); // Store the username
             break;
         }
     }
@@ -58,8 +62,8 @@ int old_user() {
     }
 }
 
-int new_user() {
-    user i;
+int new_user(char* current_username) {
+    user i;  // This is defined at the top of the function, so i.username is valid
     FILE *fp;
     
     // First check if username exists
@@ -114,13 +118,15 @@ int new_user() {
     fprintf(fp, "%s %s %d\n", i.username, i.password, i.score);
     fclose(fp);
     
+    // Store the username for the caller
+    strcpy(current_username, i.username);
+    
     printf("\n\n\t\t\t\tRegistration successful!\n");
-    // Don't call dashboard here - let main handle this after login
     
     return 1; // Return success
 }
 
-int login() {
+int login(char* current_username) {
     int choice;
     printf("\n\n");
     printf("\t\t\t\tENTER\n");
@@ -131,12 +137,12 @@ int login() {
     
     switch (choice) {
         case 1:
-            return old_user();
+            return old_user(current_username);
         case 2:
-            return new_user();
+            return new_user(current_username);
         default:
             printf("\nInvalid choice! Try again.\n");
-            return login();
+            return login(current_username);
     }
 }
 

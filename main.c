@@ -95,19 +95,20 @@ int readPoints(const char* username) {
 
 
 // Implementation of showMainMenu function
-void showMainMenu() {
-    int points = readPoints(); // Read points from file
+void showMainMenu(const char* username) {
+    int points = readPoints(username); // Read points for current user
     
     printf("\n\t\t\t\t===== DASHBOARD =====\n");
-    printf("\t\t\t\tWelcome to the Dashboard!\n");
+    printf("\t\t\t\tWelcome, %s!\n", username);
     printf("\t\t\t\tCurrent Points: %d\n", points);
     
-    // Call the existing mainMenu function
-    mainMenu(&points);
+    // Call the mainMenu function with username
+    mainMenu(username);
 }
 
 // Main menu function
-void mainMenu(int *points) {
+void mainMenu(const char* username) {
+    int points = readPoints(username); // Read points for current user
     int choice;
 
     while (1) {
@@ -126,38 +127,43 @@ void mainMenu(int *points) {
         switch (choice) {
             case 1:
                 printf("\n\t\t\t\t Starting Tic-Tac-Toe...\n");
-                if (game()) {
-                    (*points)++;  // Increase points if game() returns true (win)
+                int gameResult = game();
+                if (gameResult > 0) {
+                    points++;  // Increase points if game() returns positive (win)
                     printf("\n\t\t\t\t You won! Points increased by 1.\n");
-                    updatePointsInFile(*points);  // Update points in the file
+                    updatePointsInFile(username, points);  // Update points
+                } else if (gameResult < 0) {
+                    printf("\n\t\t\t\t You lost.\n");
+                } else {
+                    printf("\n\t\t\t\t It's a tie.\n");
                 }
                 break;
             case 2:
-                if (*points >= 1) {
+                if (points >= 1) {
                     printf("\n\t\t\t\t Performing Normal Calculations...\n");
                     normal_calculator();
-                    (*points) -= 1;  // Deduct 1 point
-                    updatePointsInFile(*points);  // Update points in the file
+                    points -= 1;  // Deduct 1 point
+                    updatePointsInFile(username, points);  // Update points
                 } else {
                     printf("\n\t\t\t\t Not enough points! You need at least 1 point.\n");
                 }
                 break;
             case 3:
-                if (*points >= 2) {
+                if (points >= 2) {
                     printf("\n\t\t\t\t Performing Matrix Calculations...\n");
                     matrix();
-                    (*points) -= 2;  // Deduct 2 points
-                    updatePointsInFile(*points);  // Update points in the file
+                    (points) -= 2;  // Deduct 2 points
+                    updatePointsInFile(username, points);  // Update points in the file
                 } else {
                     printf("\n\t\t\t\t Not enough points! You need at least 2 points.\n");
                 }
                 break;
             case 4:
-                if (*points >= 3) {
+                if (points >= 3) {
                     printf("\n\t\t\t\t Performing Circuit Calculations...\n");
                     circuit();
-                    (*points) -= 3;  // Deduct 3 points
-                    updatePointsInFile(*points);  // Update points in the file
+                    (points) -= 3;  // Deduct 3 points
+                    updatePointsInFile(username,points);  // Update points in the file
                 } else {
                     printf("\n\t\t\t\t Not enough points! You need at least 3 points.\n");
                 }
@@ -169,23 +175,25 @@ void mainMenu(int *points) {
                 printf("\n\t\t\t\t Invalid choice! Please try again.\n");
         }
 
-        printf("\n\t\t\t\t Remaining Points: %d\n", *points);
+        printf("\n\t\t\t\t Remaining Points: %d\n", points);
         press_any_key();
     }
 }
 
 int main() {
+    char current_username[50]; // Store the current user's username
+    
     hero();
     line();
 
     color(6);
     while(1) {
-        int loginSuccess = login();
+        int loginSuccess = login(current_username); // Modify login to return the username
         
         if(loginSuccess) {
-            // Show main menu and handle menu options
+            // Show main menu with username
             color(7);
-            showMainMenu();
+            showMainMenu(current_username);
             line();
         } else {
             printf("Login failed!\n");
@@ -195,7 +203,7 @@ int main() {
             
             if(retry != 'y' && retry != 'Y') {
                 printf("Exiting program. Goodbye!\n");
-                return 0; // Exit the program completely
+                return 0;
             }
         }
     }
