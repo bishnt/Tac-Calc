@@ -123,7 +123,9 @@ void mainMenu(const char* username) {
         scanf("%d", &choice);
 
         switch (choice) {
+           
             case 1:
+            color(10);
                 printf("\n\t\t\t\t Starting Tic-Tac-Toe...\n");
                 int gameResult = game();
                 if (gameResult > 0) {
@@ -137,6 +139,7 @@ void mainMenu(const char* username) {
                 }
                 break;
             case 2:
+            color(12);
                 if (points >= 1) {
                     printf("\n\t\t\t\t Performing Normal Calculations...\n");
                     normal_calculator();
@@ -145,8 +148,10 @@ void mainMenu(const char* username) {
                 } else {
                     printf("\n\t\t\t\t Not enough points! You need at least 1 point.\n");
                 }
+                color(7);
                 break;
             case 3:
+            color(6);
                 if (points >= 2) {
                     printf("\n\t\t\t\t Performing Matrix Calculations...\n");
                     matrix();
@@ -155,8 +160,10 @@ void mainMenu(const char* username) {
                 } else {
                     printf("\n\t\t\t\t Not enough points! You need at least 2 points.\n");
                 }
+                color(7);
                 break;
             case 4:
+            color(3);
                 if (points >= 3) {
                     printf("\n\t\t\t\t Performing Circuit Calculations...\n");
                     circuit();
@@ -165,6 +172,7 @@ void mainMenu(const char* username) {
                 } else {
                     printf("\n\t\t\t\t Not enough points! You need at least 3 points.\n");
                 }
+                color(7);
                 break;
             case 5:
                 printf("\n\t\t\t\t Exiting the program...\n");

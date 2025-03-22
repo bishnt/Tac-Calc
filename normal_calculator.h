@@ -11,17 +11,17 @@ void normal_calculator() {
     int choice,count=3;
     printf("\t\t\t\tWelcome to the Scientific Calculator!\n\n");
     printf("\t\t\t\t you get 3 calculations, chooose them wisely\n");
-    printf("Enter 1 for Addition\n");
-    printf("Enter 2 for Subtraction\n");
-    printf("Enter 3 for Multiplication\n");
-    printf("Enter 4 for Division\n");
-    printf("Enter 5 for Modulus\n");
-    printf("Enter 6 for Power\n");
-    printf("Enter 7 for Factorial\n");
-    printf("Enter 8 for Square\n");
-    printf("Enter 9 for Cube\n");
-    printf("Enter 10 for Square Root\n\n");
-    printf("******* Press 0 to quit the program ********\n");
+    printf("\t\t\t\tEnter 1 for Addition\n");
+    printf("\t\t\t\tEnter 2 for Subtraction\n");
+    printf("\t\t\t\tEnter 3 for Multiplication\n");
+    printf("\t\t\t\tEnter 4 for Division\n");
+    printf("\t\t\t\tEnter 5 for Modulus\n");
+    printf("\t\t\t\tEnter 6 for Power\n");
+    printf("\t\t\t\tEnter 7 for Factorial\n");
+    printf("\t\t\t\tEnter 8 for Square\n");
+    printf("\t\t\t\tEnter 9 for Cube\n");
+    printf("\t\t\t\tEnter 10 for Square Root\n\n");
+    printf("\t\t\t\t******* Press 0 to quit the program ********\n");
 
     while (count) {
         printf("\nEnter the operation you want to perform: ");
