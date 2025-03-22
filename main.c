@@ -39,30 +39,57 @@ void press_any_key() {
 }
 
 // Function to update points in the file
-void updatePointsInFile(int points) {
-    FILE *file = fopen("points.txt", "w");  // Open the file in write mode
-    if (file == NULL) {
-        printf("Error opening file!\n");
+void updatePointsInFile(const char* username, int points) {
+    char fileUsername[50];
+    char filePassword[50];
+    int fileScore;
+    FILE *oldFile = fopen("database.txt", "r");
+    FILE *newFile = fopen("temp.txt", "w");
+    
+    if (oldFile == NULL || newFile == NULL) {
+        printf("Error opening files!\n");
         return;
     }
-    fprintf(file, "%d", points);  // Write the points to the file
-    fclose(file);  // Close the file
+    
+    while (fscanf(oldFile, "%s %s %d", fileUsername, filePassword, &fileScore) == 3) {
+        if (strcmp(username, fileUsername) == 0) {
+            // Update this user's score
+            fprintf(newFile, "%s %s %d\n", fileUsername, filePassword, points);
+        } else {
+            // Keep the other users as they are
+            fprintf(newFile, "%s %s %d\n", fileUsername, filePassword, fileScore);
+        }
+    }
+    
+    fclose(oldFile);
+    fclose(newFile);
+    
+    // Replace the old file with the new file
+    remove("database.txt");
+    rename("temp.txt", "database.txt");
 }
 
-// Function to read points from the file
-int readPoints() {
-    int points = 0;
-    FILE *file = fopen("points.txt", "r");  // Open the file in read mode
+// Function to read points for the current user
+int readPoints(const char* username) {
+    char fileUsername[50];
+    char filePassword[50];
+    int fileScore;
+    FILE *file = fopen("database.txt", "r");
+    
     if (file == NULL) {
-        // If the file doesn't exist, create it with 0 points
-        file = fopen("points.txt", "w");
-        fprintf(file, "%d", points);
-        fclose(file);
-        return points;
+        printf("Error opening file!\n");
+        return 0;
     }
-    fscanf(file, "%d", &points);  // Read the points from the file
-    fclose(file);  // Close the file
-    return points;
+    
+    while (fscanf(file, "%s %s %d", fileUsername, filePassword, &fileScore) == 3) {
+        if (strcmp(username, fileUsername) == 0) {
+            fclose(file);
+            return fileScore;
+        }
+    }
+    
+    fclose(file);
+    return 0; // User not found
 }
 
 
