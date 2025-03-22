@@ -15,11 +15,10 @@
 void line();
 void color(int color_code);
 void press_any_key();
-void mainMenu(int *points);
-void updatePointsInFile(int points);
-int readPoints();
-int checkCredentials(); // Added missing function declaration
-void showMainMenu(); // Added missing function declaration
+void mainMenu(const char* username);  // Updated to use username
+void updatePointsInFile(const char* username, int points);  // Updated to include username
+int readPoints(const char* username);  // Updated to include username
+void showMainMenu(const char* username);  // Added consistent declaration
 
 // Function to draw a line for UI
 void line() {
@@ -92,8 +91,6 @@ int readPoints(const char* username) {
     return 0; // User not found
 }
 
-
-
 // Implementation of showMainMenu function
 void showMainMenu(const char* username) {
     int points = readPoints(username); // Read points for current user
@@ -152,7 +149,7 @@ void mainMenu(const char* username) {
                 if (points >= 2) {
                     printf("\n\t\t\t\t Performing Matrix Calculations...\n");
                     matrix();
-                    (points) -= 2;  // Deduct 2 points
+                    points -= 2;  // Deduct 2 points
                     updatePointsInFile(username, points);  // Update points in the file
                 } else {
                     printf("\n\t\t\t\t Not enough points! You need at least 2 points.\n");
@@ -162,8 +159,8 @@ void mainMenu(const char* username) {
                 if (points >= 3) {
                     printf("\n\t\t\t\t Performing Circuit Calculations...\n");
                     circuit();
-                    (points) -= 3;  // Deduct 3 points
-                    updatePointsInFile(username,points);  // Update points in the file
+                    points -= 3;  // Deduct 3 points
+                    updatePointsInFile(username, points);  // Update points in the file
                 } else {
                     printf("\n\t\t\t\t Not enough points! You need at least 3 points.\n");
                 }

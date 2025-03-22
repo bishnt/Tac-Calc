@@ -1,3 +1,4 @@
+/* dashboard.h */
 #ifndef DASHBOARD_H
 #define DASHBOARD_H
 
@@ -5,14 +6,15 @@
 #include <string.h>
 #include <stdio.h>
 
+// Shared user structure definition
 typedef struct {
     char username[50];
     char password[50];
     int score;
-} user;
+} user_t;  // Renamed to user_t to avoid conflicts
 
 // Function to fetch user details from file
-void get_user_details(const char *username, user *u);
+void get_user_details(const char *username, user_t *u);
 
 // Function to display the dashboard
 void dashboard(const char *username);
@@ -20,7 +22,7 @@ void dashboard(const char *username);
 // Function implementations - move these to a dashboard.c file if possible
 #ifdef DASHBOARD_IMPLEMENTATION
 
-void get_user_details(const char *username, user *u) {
+void get_user_details(const char *username, user_t *u) {
     FILE *fp = fopen("database.txt", "r");
     if (fp == NULL) {
         printf("\nError: Could not open file.\n");
@@ -41,7 +43,7 @@ void dashboard(const char *username) {
     // For Linux/macOS; use "cls" for Windows
     system("cls"); // Using cls for Windows, change to "clear" for Linux/macOS
 
-    user u;
+    user_t u;  // Changed to user_t
     get_user_details(username, &u);
 
     printf("\n\n\t\t\t\tWelcome, %s!\n", u.username);
@@ -54,4 +56,3 @@ void dashboard(const char *username) {
 #endif /* DASHBOARD_IMPLEMENTATION */
 
 #endif /* DASHBOARD_H */
-

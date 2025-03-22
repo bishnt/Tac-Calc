@@ -4,18 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "dashboard.h"
-
-typedef struct {
-    char username[50];
-    char password[50];
-    int score;
-} user;
+#include "dashboard.h"  // Include dashboard.h to use user_t definition
 
 // Function declarations
-// In login.h
-
-// Updated function prototypes
 int old_user(char* current_username);
 int new_user(char* current_username);
 int login(char* current_username);
@@ -63,7 +54,7 @@ int old_user(char* current_username) {
 }
 
 int new_user(char* current_username) {
-    user i;
+    user_t i;  // Changed to user_t to match dashboard.h
     FILE *fp;
     
     printf("\n\n\t\t\t\t===== REGISTER =====\n");
