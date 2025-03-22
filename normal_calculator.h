@@ -8,9 +8,9 @@
 #define NOTE "Maze mat lo, enter the valid operation"
 
 void normal_calculator() {
-    int choice;
-    printf("\t\tWelcome to the Scientific Calculator!\n\n");
-    printf("******* Press 0 to quit the program ********\n");
+    int choice,count=3;
+    printf("\t\t\t\tWelcome to the Scientific Calculator!\n\n");
+    printf("\t\t\t\t you get 3 calculations, chooose them wisely\n");
     printf("Enter 1 for Addition\n");
     printf("Enter 2 for Subtraction\n");
     printf("Enter 3 for Multiplication\n");
@@ -21,8 +21,9 @@ void normal_calculator() {
     printf("Enter 8 for Square\n");
     printf("Enter 9 for Cube\n");
     printf("Enter 10 for Square Root\n\n");
+    printf("******* Press 0 to quit the program ********\n");
 
-    while (1) {
+    while (count) {
         printf("\nEnter the operation you want to perform: ");
         scanf("%d", &choice);
 
@@ -117,6 +118,8 @@ void normal_calculator() {
                 exit(0);
             default:
                 printf("\n********** %s ***********\n", NOTE);
+
+                count--;
         }
     }
 }
