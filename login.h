@@ -1,13 +1,16 @@
-
-
 #ifndef LOGIN_H
 #define LOGIN_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// Include dashboard.h without defining DASHBOARD_IMPLEMENTATION here
 #include "dashboard.h"
+
+typedef struct {
+    char username[50];
+    char password[50];
+    int score;
+} user;
 
 // Function declarations
 int old_user();
@@ -20,6 +23,7 @@ int old_user() {
     char password[50];
     char fileUsername[50];
     char filePassword[50];
+    int fileScore;
     int found = 0;
     
     printf("\n\t\t\t\t===== LOGIN =====\n");
@@ -36,7 +40,7 @@ int old_user() {
     }
     
     // Read the file line by line to check credentials
-    while (fscanf(file, "%s %s", fileUsername, filePassword) == 2) {
+    while (fscanf(file, "%s %s %d", fileUsername, filePassword, &fileScore) == 3) {
         if (strcmp(username, fileUsername) == 0 && strcmp(password, filePassword) == 0) {
             found = 1;
             break;
@@ -57,26 +61,34 @@ int old_user() {
 int new_user() {
     user i;
     FILE *fp;
-    int exists = 0;
     
+    // First check if username exists
     fp = fopen("database.txt", "r");
     if (fp == NULL) {
-        fp = fopen("database.txt", "a");
+        // If file doesn't exist, create it
+        fp = fopen("database.txt", "w");
         if (fp == NULL) {
-            printf("\nError: Could not open file.\n");
-            return -1;
+            printf("\nError: Could not create database file.\n");
+            return 0;
         }
+        fclose(fp);
+        fp = fopen("database.txt", "r");
     }
     
-    printf("\n\n");
+    printf("\n\n\t\t\t\t===== REGISTER =====\n");
     while (1) {
-        exists = 0;
+        int exists = 0;
         printf("\t\t\t\tUsername: ");
         scanf("%s", i.username);
         
-        user temp;
-        while (fscanf(fp, "%s %s %d", temp.username, temp.password, &temp.score) != EOF) {
-            if (strcmp(temp.username, i.username) == 0) {
+        // Check if username already exists
+        char tempUsername[50];
+        char tempPassword[50];
+        int tempScore;
+        
+        fseek(fp, 0, SEEK_SET); // Reset file pointer to beginning
+        while (fscanf(fp, "%s %s %d", tempUsername, tempPassword, &tempScore) == 3) {
+            if (strcmp(tempUsername, i.username) == 0) {
                 exists = 1;
                 printf("\n\t\t\t\tUsername already exists! Try another.\n");
                 break;
@@ -84,15 +96,15 @@ int new_user() {
         }
         
         if (!exists) break;
-        fseek(fp, 0, SEEK_SET);
     }
     
     fclose(fp);
     
+    // Now open in append mode to add the new user
     fp = fopen("database.txt", "a");
     if (fp == NULL) {
-        printf("\nError: Could not open file.\n");
-        return -1;
+        printf("\nError: Could not open database file for writing.\n");
+        return 0;
     }
     
     printf("\t\t\t\tPassword: ");
@@ -103,9 +115,9 @@ int new_user() {
     fclose(fp);
     
     printf("\n\n\t\t\t\tRegistration successful!\n");
-    dashboard(i.username);
+    // Don't call dashboard here - let main handle this after login
     
-    return i.score;
+    return 1; // Return success
 }
 
 int login() {

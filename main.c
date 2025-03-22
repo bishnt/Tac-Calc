@@ -148,16 +148,12 @@ void mainMenu(int *points) {
 }
 
 int main() {
-
     hero();
     line();
 
-
-    
-
     color(6);
     while(1) {
-        int loginSuccess = login(); // Your existing credentials check function
+        int loginSuccess = login();
         
         if(loginSuccess) {
             // Show main menu and handle menu options
@@ -165,7 +161,7 @@ int main() {
             showMainMenu();
             line();
         } else {
-            printf("Invalid credentials!\n");
+            printf("Login failed!\n");
             char retry;
             printf("Try again? (y/n): ");
             scanf(" %c", &retry);
