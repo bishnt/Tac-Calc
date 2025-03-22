@@ -63,46 +63,35 @@ int old_user(char* current_username) {
 }
 
 int new_user(char* current_username) {
-    user i;  // This is defined at the top of the function, so i.username is valid
+    user i;
     FILE *fp;
     
-    // First check if username exists
-    fp = fopen("database.txt", "r");
-    if (fp == NULL) {
-        // If file doesn't exist, create it
-        fp = fopen("database.txt", "w");
-        if (fp == NULL) {
-            printf("\nError: Could not create database file.\n");
-            return 0;
-        }
-        fclose(fp);
-        fp = fopen("database.txt", "r");
-    }
-    
     printf("\n\n\t\t\t\t===== REGISTER =====\n");
+    
     while (1) {
         int exists = 0;
         printf("\t\t\t\tUsername: ");
         scanf("%s", i.username);
         
         // Check if username already exists
-        char tempUsername[50];
-        char tempPassword[50];
-        int tempScore;
-        
-        fseek(fp, 0, SEEK_SET); // Reset file pointer to beginning
-        while (fscanf(fp, "%s %s %d", tempUsername, tempPassword, &tempScore) == 3) {
-            if (strcmp(tempUsername, i.username) == 0) {
-                exists = 1;
-                printf("\n\t\t\t\tUsername already exists! Try another.\n");
-                break;
+        fp = fopen("database.txt", "r");
+        if (fp != NULL) {  // Only check if file was opened successfully
+            char tempUsername[50];
+            char tempPassword[50];
+            int tempScore;
+            
+            while (fscanf(fp, "%s %s %d", tempUsername, tempPassword, &tempScore) == 3) {
+                if (strcmp(tempUsername, i.username) == 0) {
+                    exists = 1;
+                    printf("\n\t\t\t\tUsername already exists! Try another.\n");
+                    break;
+                }
             }
+            fclose(fp);  // Close file after checking
         }
         
-        if (!exists) break;
+        if (!exists) break;  // If username doesn't exist, break out of the loop
     }
-    
-    fclose(fp);
     
     // Now open in append mode to add the new user
     fp = fopen("database.txt", "a");
