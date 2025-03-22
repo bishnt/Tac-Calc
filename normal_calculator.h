@@ -29,6 +29,7 @@ void normal_calculator() {
 
         switch (choice) {
             case 1: {
+                count--;
                 int a, b;
                 printf("Enter two numbers: ");
                 scanf("%d%d", &a, &b);
@@ -36,6 +37,7 @@ void normal_calculator() {
                 break;
             }
             case 2: {
+                count--;
                 int a, b;
                 printf("Enter two numbers: ");
                 scanf("%d%d", &a, &b);
@@ -43,6 +45,7 @@ void normal_calculator() {
                 break;
             }
             case 3: {
+                count--;
                 int a, b;
                 printf("Enter two numbers: ");
                 scanf("%d%d", &a, &b);
@@ -50,6 +53,7 @@ void normal_calculator() {
                 break;
             }
             case 4: {
+                count--;
                 int a, b;
                 printf("Enter two numbers: ");
                 scanf("%d%d", &a, &b);
@@ -61,6 +65,7 @@ void normal_calculator() {
                 break;
             }
             case 5: {
+                count--;
                 int a, b;
                 printf("Enter two numbers: ");
                 scanf("%d%d", &a, &b);
@@ -72,6 +77,7 @@ void normal_calculator() {
                 break;
             }
             case 6: {
+                count--;
                 double base, exp;
                 printf("Enter base and exponent: ");
                 scanf("%lf %lf", &base, &exp);
@@ -79,6 +85,7 @@ void normal_calculator() {
                 break;
             }
             case 7: {
+                count--;
                 int n, fact = 1;
                 printf("Enter a number: ");
                 scanf("%d", &n);
@@ -89,6 +96,7 @@ void normal_calculator() {
                 break;
             }
             case 8: {
+                count--;
                 double num;
                 printf("Enter a number: ");
                 scanf("%lf", &num);
@@ -96,6 +104,7 @@ void normal_calculator() {
                 break;
             }
             case 9: {
+                count--;
                 double num;
                 printf("Enter a number: ");
                 scanf("%lf", &num);
@@ -103,6 +112,7 @@ void normal_calculator() {
                 break;
             }
             case 10: {
+                count--;
                 double num;
                 printf("Enter a number: ");
                 scanf("%lf", &num);
