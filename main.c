@@ -138,6 +138,7 @@ void mainMenu(const char* username) {
                     printf("\n\t\t\t\t It's a tie.\n");
                 }
                 break;
+                color(7);
             case 2:
             color(12);
                 if (points >= 1) {
