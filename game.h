@@ -87,24 +87,38 @@ int checkFreeSpaces() {
 // Handle the player's move
 void playerMove() {
     int x, y;
-    do {
+    while (1) {
         printf("Enter row #(1-3): ");
-        scanf("%d", &x);
-        x--;
-        printf("Enter column #(1-3): ");
-        scanf("%d", &y);
-        y--;
         
+        // Validate input
+        if (scanf("%d", &x) != 1) {
+            printf("Invalid input! Please enter a number between 1-3.\n");
+            while (getchar() != '\n'); // Clear invalid input
+            continue;
+        }
+
+        printf("Enter column #(1-3): ");
+        if (scanf("%d", &y) != 1) {
+            printf("Invalid input! Please enter a number between 1-3.\n");
+            while (getchar() != '\n'); // Clear invalid input
+            continue;
+        }
+
+        x--; // Convert to zero-based index
+        y--;
+
+        // Check if input is valid
         if (x < 0 || x > 2 || y < 0 || y > 2) {
             printf("Invalid coordinates! Please try again.\n");
-        }
-        else if (board[x][y] != ' ') {
+        } else if (board[x][y] != ' ') {
             printf("Invalid Move! That space is already taken.\n");
         } else {
             board[x][y] = PLAYER;
             break;
         }
-    } while (1);
+
+        while (getchar() != '\n'); // Clear input buffer after valid/invalid input
+    }
 }
 
 // Handle the computer's move
