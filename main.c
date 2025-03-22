@@ -15,10 +15,10 @@
 void line();
 void color(int color_code);
 void press_any_key();
-void mainMenu(const char* username);  // Updated to use username
-void updatePointsInFile(const char* username, int points);  // Updated to include username
-int readPoints(const char* username);  // Updated to include username
-void showMainMenu(const char* username);  // Added consistent declaration
+void mainMenu(const char* username);
+void updatePointsInFile(const char* username, int points);
+int readPoints(const char* username);
+void showMainMenu(const char* username);
 
 // Function to draw a line for UI
 void line() {
@@ -33,7 +33,7 @@ void color(int color_code) {
 // Function to wait for user input to continue
 void press_any_key() {
     printf("\n\t\t\t\tPress any key to continue...");
-    while (getchar() != '\n');  // Clear buffer
+    fflush(stdin);  // Clear input buffer
     getchar();  // Wait for key press
 }
 
@@ -93,11 +93,7 @@ int readPoints(const char* username) {
 
 // Implementation of showMainMenu function
 void showMainMenu(const char* username) {
-    int points = readPoints(username); // Read points for current user
-    
-    printf("\n\t\t\t\t===== DASHBOARD =====\n");
-    printf("\t\t\t\tWelcome, %s!\n", username);
-    printf("\t\t\t\tCurrent Points: %d\n", points);
+    dashboard(username);  // Show the dashboard first
     
     // Call the mainMenu function with username
     mainMenu(username);
@@ -109,6 +105,11 @@ void mainMenu(const char* username) {
     int choice;
 
     while (1) {
+        system("cls");  // Clear screen
+        printf("\n\t\t\t\t===== MAIN MENU =====\n");
+        printf("\t\t\t\tWelcome, %s!\n", username);
+        printf("\t\t\t\tCurrent Points: %d\n", points);
+        
         line();
         printf("\n\n\n");
         printf("\t\t\t\t Choose any of the options:\n");
@@ -178,29 +179,45 @@ void mainMenu(const char* username) {
 }
 
 int main() {
-    char current_username[50]; // Store the current user's username
+    char current_username[50] = {0}; // Store the current user's username
     
     hero();
     line();
 
     color(6);
     while(1) {
-        int loginSuccess = login(current_username); // Modify login to return the username
+        // Reset username for each login attempt
+        current_username[0] = '\0';
+        
+        int loginSuccess = login(current_username);
         
         if(loginSuccess) {
             // Show main menu with username
             color(7);
             showMainMenu(current_username);
             line();
+            
+            // Ask if user wants to log out or exit
+            char choice;
+            printf("\n\t\t\t\tDo you want to log out? (y/n): ");
+            fflush(stdin);
+            scanf(" %c", &choice);
+            
+            if(choice != 'y' && choice != 'Y') {
+                printf("\n\t\t\t\tExiting program. Goodbye!\n");
+                break;  // Exit the while loop and program
+            }
+            // If yes, continue the loop for another login
         } else {
-            printf("Login failed!\n");
+            printf("\n\t\t\t\tLogin failed!\n");
             char retry;
-            printf("Try again? (y/n): ");
+            printf("\n\t\t\t\tTry again? (y/n): ");
+            fflush(stdin);
             scanf(" %c", &retry);
             
             if(retry != 'y' && retry != 'Y') {
-                printf("Exiting program. Goodbye!\n");
-                return 0;
+                printf("\n\t\t\t\tExiting program. Goodbye!\n");
+                break;  // Exit the while loop and program
             }
         }
     }

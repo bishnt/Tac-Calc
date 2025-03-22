@@ -4,7 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "dashboard.h"  // Include dashboard.h to use user_t definition
+#include "dashboard.h"
+
+typedef struct {
+    char username[50];
+    char password[50];
+    int score;
+} user;
 
 // Function declarations
 int old_user(char* current_username);
@@ -54,10 +60,13 @@ int old_user(char* current_username) {
 }
 
 int new_user(char* current_username) {
-    user_t i;  // Changed to user_t to match dashboard.h
+    user i;
     FILE *fp;
     
     printf("\n\n\t\t\t\t===== REGISTER =====\n");
+    
+    // Clear input buffer
+    while (getchar() != '\n');
     
     while (1) {
         int exists = 0;
@@ -108,6 +117,10 @@ int new_user(char* current_username) {
 
 int login(char* current_username) {
     int choice;
+    // Clear input buffer
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+    
     printf("\n\n");
     printf("\t\t\t\tENTER\n");
     printf("\t\t\t\t(1) to Login\n");
@@ -122,6 +135,8 @@ int login(char* current_username) {
             return new_user(current_username);
         default:
             printf("\nInvalid choice! Try again.\n");
+            // Clear input buffer
+            while ((c = getchar()) != '\n' && c != EOF);
             return login(current_username);
     }
 }
