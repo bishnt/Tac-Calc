@@ -19,7 +19,6 @@ void get_user_details(const char *username, user_t *u);
 // Function to display the dashboard
 void dashboard(const char *username);
 
-// Function implementations - move these to a dashboard.c file if possible
 #ifdef DASHBOARD_IMPLEMENTATION
 
 void get_user_details(const char *username, user_t *u) {
